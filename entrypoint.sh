@@ -27,7 +27,13 @@ if [ -z "$INPUT_REGION" ]; then
   exit 1
 fi
 
-coscmd config -a $INPUT_SECRET_ID -s $INPUT_SECRET_KEY -b $INPUT_BUCKET -r $INPUT_REGION -m 30
+if [ "$INPUT_ACCELERATE" ]; then
+  echo '::info::Upload to accelerate domain'
+  coscmd config -a $INPUT_SECRET_ID -s $INPUT_SECRET_KEY -b $INPUT_BUCKET -e cos.accelerate.myqcloud.com -m 30
+else
+  coscmd config -a $INPUT_SECRET_ID -s $INPUT_SECRET_KEY -b $INPUT_BUCKET -r $INPUT_REGION -m 30
+fi
+
 
 IFS="&&"
 arrARGS=($INPUT_ARGS)

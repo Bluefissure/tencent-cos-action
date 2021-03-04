@@ -20,6 +20,9 @@ inputs:
   region:
     description: 'COS bucket region, detail: https://cloud.tencent.com/document/product/436/6224'
     required: true
+  accelerate:
+    description: 'Set to true for using accelerate domain to upload files. Default is false'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
