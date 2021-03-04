@@ -35,18 +35,21 @@ jobs:
         run: yarn && yarn build
 
       - name: Upload COS
-        uses: zkqiang/tencent-cos-action@v0.1.0
+        uses: Bluefissure/tencent-cos-action@v0.1.1
         with:
           args: delete -r -f / && upload -r ./dist/ /
           secret_id: ${{ secrets.SECRET_ID }}
           secret_key: ${{ secrets.SECRET_KEY }}
           bucket: ${{ secrets.BUCKET }}
           region: ap-shanghai
+          accelerate: false
 ```
 
 其中 `${{ secrets.SECRET_XXX }}` 是调用 settings 配置的密钥，防止公开代码将权限密钥暴露，添加方式如下：
 
 ![](https://static.zkqiang.cn/images/20200118171056.png-slim)
+
+请注意，`accelerate`为`true`时不支持delete操作。
 
 ## 相关参数
 
@@ -60,3 +63,4 @@ jobs:
 | secret_key | 是 | 同上 |
 | bucket | 是 | 对象存储桶的名称，包含后边的数字 |
 | region | 是 | 对象存储桶的地区，[参见文档](https://cloud.tencent.com/document/product/436/6224) |
+| accelerate | 否 | 是否启用全球加速，[参见文档](https://cloud.tencent.com/document/product/436/10976) |
